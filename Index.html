@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercadinho Monções — Sto André, SP</title>
+<style>
+  :root{
+    --wine-950:#1a0a0c;
+    --wine-900:#2a0f13;
+    --wine-800:#3a141a;
+    --cream:#f7ecd8;
+    --cream-dim:#e8d9bd;
+    --gold:#e6a83c;
+    --gold-light:#f0c471;
+    --gold-deep:#c4872a;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:Georgia, 'Times New Roman', serif;
+    background:var(--wine-950);
+    color:var(--cream);
+    line-height:1.6;
+  }
+  a{ text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  .container{ max-width:1100px; margin:0 auto; padding:0 24px; }
+
+  /* ===== NAVBAR ===== */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(26,10,12,0.95);
+    border-bottom:1px solid rgba(230,168,60,0.25);
+    backdrop-filter:blur(6px);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    max-width:1100px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand img{ width:48px; height:48px; border-radius:50%; }
+  .brand span{ font-size:20px; font-weight:bold; letter-spacing:.5px; }
+  .brand span em{ color:var(--gold-light); font-style:normal; }
+  nav ul{ display:flex; gap:32px; }
+  nav ul a{ color:var(--cream-dim); font-size:15px; letter-spacing:.5px; transition:color .2s; }
+  nav ul a:hover{ color:var(--gold-light); }
+  .nav-cta{
+    background:var(--gold); color:var(--wine-950); padding:9px 20px;
+    border-radius:4px; font-weight:bold; font-size:14px;
+  }
+  .nav-cta:hover{ background:var(--gold-light); }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:90px 24px 100px;
+    text-align:center;
+    background:
+      radial-gradient(900px 500px at 50% -10%, var(--wine-800) 0%, var(--wine-950) 65%);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(230,168,60,0.03) 0px, rgba(230,168,60,0.03) 2px, transparent 2px, transparent 26px);
+  }
+  .hero-inner{ position:relative; max-width:700px; margin:0 auto; }
+  .hero img.logo-big{
+    width:150px; margin:0 auto 28px;
+  }
+  .hero h1{
+    font-size:46px; color:var(--cream); line-height:1.15; margin-bottom:16px;
+  }
+  .hero h1 em{ color:var(--gold-light); font-style:normal; }
+  .hero p{ color:var(--cream-dim); font-size:18px; margin-bottom:32px; }
+  .hero-btns{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-block; padding:14px 30px; border-radius:5px; font-weight:bold;
+    font-size:15px; letter-spacing:.5px; transition:transform .2s, background .2s;
+  }
+  .btn-primary{ background:var(--gold); color:var(--wine-950); }
+  .btn-primary:hover{ background:var(--gold-light); transform:translateY(-2px); }
+  .btn-outline{ border:1.5px solid var(--gold); color:var(--gold-light); }
+  .btn-outline:hover{ background:rgba(230,168,60,0.1); transform:translateY(-2px); }
+
+  /* ===== SECTION HEADINGS ===== */
+  .section{ padding:80px 24px; }
+  .section-head{ text-align:center; max-width:600px; margin:0 auto 50px; }
+  .eyebrow{
+    color:var(--gold-light); font-size:13px; letter-spacing:4px; text-transform:uppercase;
+    margin-bottom:10px; display:block;
+  }
+  .section-head h2{ font-size:34px; color:var(--cream); }
+  .section-head h2 em{ color:var(--gold-light); font-style:normal; }
+  .section-head p{ color:var(--cream-dim); margin-top:14px; }
+
+  /* ===== ABOUT ===== */
+  .about{ background:var(--wine-900); }
+  .about-grid{
+    display:flex; gap:50px; align-items:center; flex-wrap:wrap;
+    max-width:1100px; margin:0 auto; padding:0 24px;
+  }
+  .about-grid .about-img{
+    flex:1; min-width:280px;
+    aspect-ratio:1/1;
+    border:2px solid var(--gold); border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--wine-950);
+    padding:30px;
+  }
+  .about-grid .about-text{ flex:1; min-width:280px; }
+  .about-text h3{ font-size:28px; margin-bottom:16px; color:var(--cream); }
+  .about-text p{ color:var(--cream-dim); margin-bottom:14px; }
+  .about-list{ margin-top:20px; }
+  .about-list li{ color:var(--cream-dim); padding:6px 0; padding-left:26px; position:relative; }
+  .about-list li::before{ content:"✦"; position:absolute; left:0; color:var(--gold); }
+
+  /* ===== CATEGORIES ===== */
+  .categories{ background:var(--wine-950); }
+  .cat-grid{
+    display:flex; flex-wrap:wrap;
+    gap:24px; max-width:1100px; margin:0 auto;
+  }
+  .cat-card{
+    background:var(--wine-900); border:1px solid rgba(230,168,60,0.2);
+    border-radius:8px; padding:32px 24px; text-align:center;
+    transition:transform .2s, border-color .2s;
+    flex:1 1 210px;
+  }
+  .cat-card:hover{ transform:translateY(-4px); border-color:var(--gold); }
+  .cat-card .icon{ font-size:34px; margin-bottom:14px; }
+  .cat-card h4{ color:var(--gold-light); font-size:18px; margin-bottom:8px; }
+  .cat-card p{ color:var(--cream-dim); font-size:14px; }
+
+  /* ===== MENU PREVIEW ===== */
+  .menu-preview{ background:var(--wine-900); }
+  .menu-cols{
+    display:flex; flex-wrap:wrap;
+    gap:40px; max-width:1000px; margin:0 auto;
+  }
+  .menu-cols > div{ flex:1 1 260px; min-width:0; }
+  .menu-cols h4{
+    color:var(--gold-light); font-size:19px; font-style:italic;
+    border-bottom:1px dotted rgba(230,168,60,0.4); padding-bottom:10px; margin-bottom:14px;
+  }
+  .menu-item{
+    overflow:hidden;
+    padding:7px 0; border-bottom:1px dotted rgba(232,217,189,0.15);
+    color:var(--cream); font-size:15px;
+    white-space:nowrap;
+  }
+  .menu-item span:first-child{ display:inline-block; width:calc(100% - 72px); overflow:hidden; text-overflow:ellipsis; vertical-align:top; }
+  .menu-item span:last-child{ display:inline-block; width:68px; text-align:right; color:var(--gold-light); font-weight:bold; vertical-align:top; }
+  .menu-more{ text-align:center; margin-top:44px; }
+
+  /* ===== INFO / CONTACT ===== */
+  .info{ background:var(--wine-950); }
+  .info-grid{
+    display:flex; flex-wrap:wrap;
+    gap:32px; max-width:1000px; margin:0 auto;
+  }
+  .info-card{ text-align:center; padding:20px; flex:1 1 240px; }
+  .info-card .icon{ font-size:28px; margin-bottom:12px; }
+  .info-card h4{ color:var(--cream); font-size:17px; margin-bottom:8px; }
+  .info-card p{ color:var(--cream-dim); font-size:14px; }
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--wine-900); border-top:1px solid rgba(230,168,60,0.2);
+    padding:40px 24px 24px; text-align:center;
+  }
+  footer .brand{ justify-content:center; margin-bottom:14px; }
+  footer p{ color:var(--cream-dim); font-size:13px; margin-top:10px; }
+  footer .socials{ display:flex; justify-content:center; gap:18px; margin-top:16px; }
+  footer .socials a{ color:var(--gold-light); font-size:14px; }
+
+  @media (max-width: 760px){
+    nav ul{ display:none; }
+    .hero h1{ font-size:32px; }
+    .about-grid{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <img src="logo.png" alt="Mercadinho Monções">
+      <span>Mercadinho <em>Monções</em></span>
+    </div>
+    <ul>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#categorias">Categorias</a></li>
+      <li><a href="#cardapio">Cardápio</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/551125984704">Pedir Agora</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <img class="logo-big" src="logo.png" alt="Mercadinho Monções">
+    <h1>Sabor de <em>padaria artesanal</em>,<br>direto na sua porta</h1>
+    <p>Pães fresquinhos, salgados, bolos e mercearia completa. Tradição de bairro em Santo André - SP, com delivery rápido todos os dias.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="cardapio_mercadinho_moncoes.html">Ver Cardápio Completo</a>
+      <a class="btn btn-outline" href="https://wa.me/551125984704">Pedir no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="sobre">
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="logo.png" alt="Mercadinho Monções">
+    </div>
+    <div class="about-text">
+      <span class="eyebrow">Nossa história</span>
+      <h3>Um mercadinho de bairro, com carinho de padaria</h3>
+      <p>O Mercadinho Monções nasceu para ser aquele lugar de confiança pertinho de casa: pão quentinho de manhã, o salgado que salva o lanche da tarde e tudo o que falta na despensa, sem precisar sair do bairro.</p>
+      <p>Trabalhamos com produtos frescos, feitos no dia, e um mercado completo — de frios a bebidas — para o seu dia a dia ficar mais fácil.</p>
+      <ul class="about-list">
+        <li>Pães e salgados assados diariamente</li>
+        <li>Bolos e sobremesas caseiras</li>
+        <li>Frios, bebidas e itens de mercearia</li>
+        <li>Delivery rápido para toda a região</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section categories" id="categorias">
+  <div class="section-head">
+    <span class="eyebrow">O que você encontra</span>
+    <h2>Nossas <em>categorias</em></h2>
+    <p>Tudo o que você precisa, de um só lugar</p>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="icon">🥖</div><h4>Padaria</h4><p>Pão francês, de leite e de frios, fresquinhos todo dia</p></div>
+    <div class="cat-card"><div class="icon">🥟</div><h4>Salgados</h4><p>Coxinha, kibe, empada, empadão e muito mais</p></div>
+    <div class="cat-card"><div class="icon">🎂</div><h4>Bolos & Sobremesas</h4><p>Bolo de pote, tortas, brigadeiro e sobremesas caseiras</p></div>
+    <div class="cat-card"><div class="icon">🧀</div><h4>Frios</h4><p>Mortadela, presunto, queijos e peito de peru fatiados</p></div>
+    <div class="cat-card"><div class="icon">🥤</div><h4>Bebidas</h4><p>Refrigerantes, sucos, cervejas e água</p></div>
+    <div class="cat-card"><div class="icon">🛒</div><h4>Mercearia</h4><p>Itens básicos para o dia a dia da sua casa</p></div>
+  </div>
+</section>
+
+<section class="section menu-preview" id="cardapio">
+  <div class="section-head">
+    <span class="eyebrow">Alguns destaques</span>
+    <h2>Do <em>cardápio</em></h2>
+    <p>Uma prévia do que temos para você</p>
+  </div>
+  <div class="menu-cols">
+    <div>
+      <h4>Lanches</h4>
+      <div class="menu-item"><span>Lanche de carne louca</span><span>R$ 15</span></div>
+      <div class="menu-item"><span>Lanche de peito de peru</span><span>R$ 15</span></div>
+      <div class="menu-item"><span>Sanduíche de mortadela</span><span>R$ 8</span></div>
+    </div>
+    <div>
+      <h4>Salgados</h4>
+      <div class="menu-item"><span>Coxinha de frango (média)</span><span>R$ 3</span></div>
+      <div class="menu-item"><span>Empadão frango c/ catupiry</span><span>R$ 45</span></div>
+      <div class="menu-item"><span>Mini pães de queijo (10un)</span><span>R$ 11,90</span></div>
+    </div>
+    <div>
+      <h4>Bolos & Sobremesas</h4>
+      <div class="menu-item"><span>Bolo recheado ninho</span><span>R$ 38,50</span></div>
+      <div class="menu-item"><span>Torta de morango grande</span><span>R$ 31</span></div>
+      <div class="menu-item"><span>Brigadeiro (6 unid.)</span><span>R$ 10,90</span></div>
+    </div>
+  </div>
+  <div class="menu-more">
+    <a class="btn btn-primary" href="cardapio_mercadinho_moncoes.html">Ver Cardápio Completo</a>
+  </div>
+</section>
+
+<section class="section info" id="contato">
+  <div class="section-head">
+    <span class="eyebrow">Fale com a gente</span>
+    <h2>Onde nos <em>encontrar</em></h2>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">📍</div>
+      <h4>Endereço</h4>
+      <p>Santo André - SP</p>
+    </div>
+    <div class="info-card">
+      <div class="icon">🕒</div>
+      <h4>Horário</h4>
+      <p>Todos os dias · 7h às 22h</p>
+    </div>
+    <div class="info-card">
+      <div class="icon">📱</div>
+      <h4>WhatsApp</h4>
+      <p>(11) 2598-4704</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand">
+    <img src="logo.png" alt="Mercadinho Monções" style="width:40px;height:40px;border-radius:50%;">
+    <span>Mercadinho <em>Monções</em></span>
+  </div>
+  <div class="socials">
+    <a href="https://www.instagram.com/moncoes_mercadinho/">Instagram</a>
+    <a href="https://wa.me/551125984704">WhatsApp</a>
+  </div>
+  <p>© 2026 Mercadinho Monções — Santo André, SP. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
