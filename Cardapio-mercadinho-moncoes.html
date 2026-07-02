@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cardápio Mercadinho Monções</title>
+<style>
+  :root{
+    --wine-950:#1a0a0c;
+    --wine-900:#2a0f13;
+    --wine-800:#3a141a;
+    --cream:#f7ecd8;
+    --cream-dim:#e8d9bd;
+    --gold:#e6a83c;
+    --gold-light:#f0c471;
+    --gold-deep:#c4872a;
+    --hairline:rgba(230,168,60,0.35);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    width:1400px;
+    background:
+      radial-gradient(1200px 700px at 15% 0%, var(--wine-800) 0%, var(--wine-950) 62%),
+      var(--wine-950);
+    font-family:'Lora', 'Liberation Serif', serif;
+    color:var(--cream);
+    padding:64px 72px 80px;
+    position:relative;
+  }
+
+  /* subtle wheat-field texture stripes echoing the logo base */
+  body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: repeating-linear-gradient(115deg, rgba(230,168,60,0.02) 0px, rgba(230,168,60,0.02) 2px, transparent 2px, transparent 26px);
+    pointer-events:none;
+  }
+
+  .frame{
+    position:relative;
+    border:1.5px solid var(--hairline);
+    padding:46px 54px 54px;
+  }
+  .frame::before, .frame::after,
+  .frame .corner-br, .frame .corner-bl{
+    content:"";
+    position:absolute;
+    width:34px; height:34px;
+    border:2px solid var(--gold);
+  }
+  .frame::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; }
+  .frame::after{ top:-2px; right:-2px; border-left:none; border-bottom:none; }
+  .corner-bl{ bottom:-2px; left:-2px; border-right:none; border-top:none; }
+  .corner-br{ bottom:-2px; right:-2px; border-left:none; border-top:none; }
+
+  /* ===== HEADER ===== */
+  .header{
+    display:flex;
+    align-items:center;
+    gap:38px;
+    padding-bottom:32px;
+    border-bottom:1px solid var(--hairline);
+    margin-bottom:38px;
+  }
+  .logo-wrap{
+    flex-shrink:0;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2.5px solid var(--gold);
+    box-shadow:0 0 0 6px var(--wine-950), 0 0 0 7px var(--hairline);
+    background:var(--wine-950);
+  }
+  .logo-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.32) translateY(2px);
+  }
+  .header-text{
+    flex:1;
+    text-align:center;
+  }
+  .header-spacer{
+    flex-shrink:0;
+    width:150px;
+  }
+  .eyebrow{
+    font-family:'DejaVu Sans', sans-serif;
+    font-size:14px;
+    letter-spacing:8px;
+    color:var(--gold-light);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .header-text h1{
+    font-family:'Lora', 'Liberation Serif', serif;
+    font-weight:900;
+    font-size:64px;
+    letter-spacing:2px;
+    color:var(--cream);
+    line-height:1;
+    text-shadow:0 2px 18px rgba(0,0,0,0.4);
+  }
+  .header-text .accent{ color:var(--gold-light); }
+  .header-rule{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin-top:14px;
+  }
+  .header-rule .line{ width:70px; height:1px; background:var(--gold); opacity:.6; }
+  .header-rule .diamond{ width:7px; height:7px; background:var(--gold); transform:rotate(45deg); }
+  .subtitle{
+    font-family:'DejaVu Sans', sans-serif;
+    font-size:15.5px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    margin-top:12px;
+  }
+
+  /* ===== LAYOUT ===== */
+  .menu-grid{
+    display:block;
+    position:relative;
+    width:1148px;
+    height:900px;
+    overflow:visible;
+  }
+  .col{
+    position:absolute;
+    top:0;
+    width:362px;
+  }
+  .col-1{ left:0px; }
+  .col-2{ left:393px; }
+  .col-3{ left:786px; }
+
+  .section{
+    margin-bottom:36px;
+  }
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .section-title h2{
+    font-family:'Lora', 'Liberation Serif', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:27px;
+    color:var(--gold-light);
+    white-space:nowrap;
+  }
+  .section-title .fill{
+    flex:1;
+    height:1px;
+    background:repeating-linear-gradient(to right, var(--gold) 0, var(--gold) 3px, transparent 3px, transparent 8px);
+    opacity:.55;
+    margin-top:4px;
+  }
+
+  .item{
+    position:relative;
+    padding:7px 0 8px;
+    border-bottom:1px dotted rgba(232,217,189,0.35);
+  }
+  .item-price{
+    position:absolute;
+    top:7px;
+    right:0;
+    text-align:right;
+    font-family:'DejaVu Sans', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--gold-light);
+    white-space:nowrap;
+  }
+  .item-price::before{ content:"R$ "; font-size:12px; opacity:.75; }
+  .item-name{
+    display:block;
+    font-size:18px;
+    font-weight:500;
+    color:var(--cream);
+    line-height:1.25;
+    padding-right:70px;
+  }
+  .item-dots{
+    display:none;
+  }
+
+  .item-note{
+    display:block;
+    font-family:'DejaVu Sans', sans-serif;
+    font-size:11.5px;
+    letter-spacing:1px;
+    color:var(--cream-dim);
+    opacity:.65;
+    margin-top:-3px;
+  }
+
+  /* ===== FOOTER ===== */
+  .grid-spacer{ height:900px; }
+  .footer{
+    margin-top:20px;
+    padding-top:26px;
+    border-top:1px solid var(--hairline);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .footer-note{
+    font-family:'DejaVu Sans', sans-serif;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--cream-dim);
+    text-transform:uppercase;
+  }
+  .footer-brand{
+    font-family:'Lora', 'Liberation Serif', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:19px;
+    color:var(--gold-light);
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="corner-bl"></div>
+    <div class="corner-br"></div>
+
+    <div class="header">
+      <div class="logo-wrap"><img src="logo.png" alt="Logo"></div>
+      <div class="header-text">
+        <div class="eyebrow">Padaria &amp; Mercearia Artesanal</div>
+        <h1>Mercadinho <span class="accent">Monções</span></h1>
+        <div class="header-rule"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>
+        <div class="subtitle">Cardápio Delivery — Sto André · SP</div>
+      </div>
+      <div class="header-spacer"></div>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- COLUMN 1 -->
+      <div class="col col-1">
+        <div class="section">
+          <div class="section-title"><h2>Lanches</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Lanche de carne louca</span><span class="item-dots"></span><span class="item-price">15</span></div>
+          <div class="item"><span class="item-name">Lanche de pâté de frango</span><span class="item-dots"></span><span class="item-price">15</span></div>
+          <div class="item"><span class="item-name">Lanche de peito de peru</span><span class="item-dots"></span><span class="item-price">15</span></div>
+          <div class="item"><span class="item-name">Lanche de salame</span><span class="item-dots"></span><span class="item-price">15</span></div>
+          <div class="item"><span class="item-name">Lanche de presunto</span><span class="item-dots"></span><span class="item-price">15</span></div>
+          <div class="item"><span class="item-name">Sanduíche de mortadela</span><span class="item-dots"></span><span class="item-price">8</span></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title"><h2>Salgados</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Empada de palmito</span><span class="item-dots"></span><span class="item-price">8</span></div>
+          <div class="item"><span class="item-name">Empada frango c/ catupiry</span><span class="item-dots"></span><span class="item-price">8</span></div>
+          <div class="item"><span class="item-name">Empadão de palmito</span><span class="item-dots"></span><span class="item-price">43</span></div>
+          <div class="item"><span class="item-name">Empadão frango c/ catupiry</span><span class="item-dots"></span><span class="item-price">45</span></div>
+          <div class="item"><span class="item-name">Coxinha de frango <span class="item-note">(média)</span></span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Kibe <span class="item-note">(médio)</span></span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Risoles presunto e queijo <span class="item-note">(médio)</span></span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Bolinha de queijo <span class="item-note">(média)</span></span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Bolinho de carne <span class="item-note">(médio)</span></span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Hamburgão <span class="item-note">(grande)</span></span><span class="item-dots"></span><span class="item-price">9</span></div>
+          <div class="item"><span class="item-name">Mini pães de queijo <span class="item-note">(10 unid.)</span></span><span class="item-dots"></span><span class="item-price">11,90</span></div>
+        </div>
+
+      <!-- COLUMN 2 -->
+      <div class="col col-2">
+        <div class="section">
+          <div class="section-title"><h2>Bolos</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Bolo cremoso de aipim c/ coco</span><span class="item-dots"></span><span class="item-price">23,90</span></div>
+          <div class="item"><span class="item-name">Bolo recheado ninho</span><span class="item-dots"></span><span class="item-price">38,50</span></div>
+          <div class="item"><span class="item-name">Bolo coberto de brigadeiro</span><span class="item-dots"></span><span class="item-price">23,90</span></div>
+          <div class="item"><span class="item-name">Bolo de fubá</span><span class="item-dots"></span><span class="item-price">23,90</span></div>
+          <div class="item"><span class="item-name">Bolo coberto de limão</span><span class="item-dots"></span><span class="item-price">23,90</span></div>
+          <div class="item"><span class="item-name">Bolo de cenoura c/ brigadeiro</span><span class="item-dots"></span><span class="item-price">29,90</span></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title"><h2>Sobremesas</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Bolo de pote ninho c/ suflair</span><span class="item-dots"></span><span class="item-price">12</span></div>
+          <div class="item"><span class="item-name">Brigadeiro <span class="item-note">(6 unid.)</span></span><span class="item-dots"></span><span class="item-price">10,90</span></div>
+          <div class="item"><span class="item-name">Carolina <span class="item-note">(6 unid.)</span></span><span class="item-dots"></span><span class="item-price">22,90</span></div>
+          <div class="item"><span class="item-name">Torta de limão <span class="item-note">(grande)</span></span><span class="item-dots"></span><span class="item-price">26,50</span></div>
+          <div class="item"><span class="item-name">Cookie</span><span class="item-dots"></span><span class="item-price">3</span></div>
+          <div class="item"><span class="item-name">Torta de morango <span class="item-note">(grande)</span></span><span class="item-dots"></span><span class="item-price">31</span></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title"><h2>Mercearia</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Margarina Doriana c/ sal <span class="item-note">(500g)</span></span><span class="item-dots"></span><span class="item-price">13,90</span></div>
+        </div>
+      </div>
+
+      <!-- COLUMN 3 -->
+      <div class="col col-3">
+        <div class="section">
+          <div class="section-title"><h2>Frios <span style="font-size:15px; opacity:.75;">(100g)</span></h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Mortadela defumada</span><span class="item-dots"></span><span class="item-price">5,99</span></div>
+          <div class="item"><span class="item-name">Mortadela tradicional</span><span class="item-dots"></span><span class="item-price">4,50</span></div>
+          <div class="item"><span class="item-name">Presunto cozido</span><span class="item-dots"></span><span class="item-price">5,99</span></div>
+          <div class="item"><span class="item-name">Peito de peru</span><span class="item-dots"></span><span class="item-price">11,90</span></div>
+          <div class="item"><span class="item-name">Mussarela</span><span class="item-dots"></span><span class="item-price">8,90</span></div>
+          <div class="item"><span class="item-name">Queijo prato</span><span class="item-dots"></span><span class="item-price">9,90</span></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title"><h2>Bebidas</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Água sem gás <span class="item-note">(500ml)</span></span><span class="item-dots"></span><span class="item-price">4,50</span></div>
+          <div class="item"><span class="item-name">Coca-Cola <span class="item-note">(2L)</span></span><span class="item-dots"></span><span class="item-price">19,50</span></div>
+          <div class="item"><span class="item-name">Coca-Cola <span class="item-note">(lata)</span></span><span class="item-dots"></span><span class="item-price">7</span></div>
+          <div class="item"><span class="item-name">Coca-Cola <span class="item-note">(600ml)</span></span><span class="item-dots"></span><span class="item-price">9,90</span></div>
+          <div class="item"><span class="item-name">Pepsi <span class="item-note">(2L)</span></span><span class="item-dots"></span><span class="item-price">16,90</span></div>
+          <div class="item"><span class="item-name">Suco de laranja Xandô <span class="item-note">(300ml)</span></span><span class="item-dots"></span><span class="item-price">8,90</span></div>
+          <div class="item"><span class="item-name">Cerveja Itaipava <span class="item-note">(350ml)</span></span><span class="item-dots"></span><span class="item-price">5</span></div>
+        </div>
+
+        <div class="section">
+          <div class="section-title"><h2>Padaria</h2><div class="fill"></div></div>
+          <div class="item"><span class="item-name">Pão francês</span><span class="item-dots"></span><span class="item-price">1,45</span></div>
+          <div class="item"><span class="item-name">Pão de leite</span><span class="item-dots"></span><span class="item-price">1,90</span></div>
+          <div class="item"><span class="item-name">Pão de açúcar</span><span class="item-dots"></span><span class="item-price">1,90</span></div>
+          <div class="item"><span class="item-name">Pão de frios</span><span class="item-dots"></span><span class="item-price">2,50</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="grid-spacer"></div>
+
+    <div class="footer">
+      <div class="footer-note">Peça já pelo delivery — pagamento na entrega</div>
+      <div class="footer-brand">✧ Mercadinho Monções ✧</div>
+    </div>
+  </div>
+</body>
+</html>
